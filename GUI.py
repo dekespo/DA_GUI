@@ -1,15 +1,10 @@
 import Tkinter as tk
-import matplotlib
-matplotlib.use('TkAgg')
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
-import sys
+import tkFont
+import plots
 
 class GUI:
 	
 	def __init__(self, dataSet):
-
 		# Start GUI
 		self.root = tk.Tk()
 		self.root.title("DA_GUI_py")
@@ -30,20 +25,18 @@ class GUI:
 
 		# Add Textbox for datasset
 		self.addTextBox()
-
-		self.root.mainloop() # Keep showing the GUI
+		
+		# Keep showing the GUI
+		self.root.mainloop() 
 	
-	def addPanes(self):
 
+	def addPanes(self):
 		self.window = tk.PanedWindow(self.root, showhandle = True, bd = 1)
-		self.window.pack(fill = tk.BOTH, expand = 1) # Gives felxible size 
-													 # arragenment in
-													 # the window (not
-													 # event listener
-													 # is used)
+		# Gives flexible size arragenment in the window (not event listener is used)
+		self.window.pack(fill = tk.BOTH, expand = 1) 
 
 		div = self.width / 3
-		self.panes = [] # 0 = Left, 1 = center, 2 right
+		self.panes = [] # 0 = Left, 1 = Center, 2 Right
 		self.panes.append(tk.Label(self.window, text = "LEFT"))
 		self.panes.append(tk.Label(self.window, text = "CENTER"))
 		self.panes.append(tk.Label(self.window, text = "RIGHT"))
@@ -56,32 +49,13 @@ class GUI:
 
 
 	def addTextBox(self):
-		t = tk.Text(self.panes[1], height = self.height, width = self.width / 3)
+		fontType = tkFont.Font(family = "Helvetica", size = 20)
+		t = tk.Text(self.panes[1], height = self.height, width = self.width / 3, font = fontType)
 		t.insert(tk.END, self.dataSet)
 		t.pack()
 
 	def addPlot(self):
-		fig = Figure(figsize = None, dpi = None) # Do not use plt
-										         #instead of Figure,
-												 #it creates some
-												 #problem whwn the GUI
-												 #is being close
-		a = fig.add_subplot(111)
-		x = "Volume"
-		y = "Open"
-		#t = self.dataSet["Date"]
-		t = self.dataSet[x]
-		s = self.dataSet[y]
-		a.scatter(t,s)
-		a.set_xlabel(x); a.set_ylabel(y); a.set_title(y + " vs " + x)
+		# Put into the right pane
+		pane = self.panes[2] 
 
-		pane = self.panes[2] # the right pane
-
-		canvas = FigureCanvasTkAgg(fig, master = pane)
-		canvas.show()
-		canvas.get_tk_widget().pack(side = tk.TOP, fill = tk.BOTH, expand = 1)
-
-		toolbar = NavigationToolbar2TkAgg(canvas, pane)
-		toolbar.update()
-		canvas._tkcanvas.pack(side = tk.TOP, fill = tk.BOTH, expand = 1)
-
+		plots.plots(self.dataSet, pane)

@@ -1,5 +1,12 @@
 # DA_GUI
 Data Analysis with GUI in Python (TkInter)
+- It needs internet connection to download data via Quandl
+
+# Libraries
+- Quandl
+- Tkinter
+- Matplotlib
+- Pandas
 
 # Status
-- Not working at the moment, Tkinter issue
+- Partly working at the moment, but still Tkinter issue
