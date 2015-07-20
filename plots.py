@@ -2,39 +2,38 @@ import Tkinter as tk
 import matplotlib
 #matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.figure import Figure
+#from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
-import matplotlib.dates as dates
+import matplotlib.dates as mdates
 import pandas as pd
 from datetime import datetime
 
 
 def plots(dataSet, window):
-		# Do not use plt instead of Figure, it creates some problem when the GUI is being closed
-		fig = Figure(figsize = None, dpi = None) 
-		ax = fig.add_subplot(111)
 
+		years = mdates.YearLocator()
+		months = mdates.MonthLocator()
+		yearsFmt = mdates.DateFormatter('%Y-%m')
+
+		fig, ax = plt.subplots()
+
+		time = dataSet.index.to_pydatetime()
+		t = "Time"
 		x = "Volume"
 		y = "Open"
-		z = "High"
-		#t = dataSet["Date"]
 		print list(dataSet.columns.values)
-		#dates = pd.to_datetime(dataSet["Date"])
-		#print dates
-		t = dataSet[x]
-		s = dataSet[y]
-		#ax.scatter(t,s)
-		ax.scatter(dataSet.index.to_pydatetime(),s)
-		#ax.xaxis.set_minor_locator(dates.WeekdayLocator(byweekday=(5),interval=5))
-		#ax.xaxis.set_minor_formatter(dates.DateFormatter("%d\n%a"))
-		ax.set_xlabel(x); ax.set_ylabel(y); ax.set_title(y + " vs " + x)
+		xValues = dataSet[x]
+		#yValues = dataSet[y]
+		#ax.scatter(xValues, yValues)
+		ax.scatter(time, xValues)
+
+		ax.xaxis.set_major_locator(years)
+		ax.xaxis.set_major_formatter(yearsFmt)
+		ax.xaxis.set_minor_locator(months)
+		ax.format_xdata = mdates.DateFormatter('%Y-%m-%d')
+		plt.setp(plt.xticks()[1], rotation = 60)
 		ax.grid(True)
-		#ax.plot_date(dates, t)
-		t = dataSet[x]
-		s = dataSet[z]
-		#ax.scatter(t,s)
-		#ax.set_xlabel(x); ax.set_ylabel(z); ax.set_title(z + " vs " + x)
-		#ax.grid(True)
+		ax.set_xlabel(t); ax.set_ylabel(x); ax.set_title(t + " vs " + x)
 
 		# Add the graphic
 		canvas = FigureCanvasTkAgg(fig, master = window)

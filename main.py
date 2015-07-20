@@ -5,7 +5,7 @@ def main():
 	dataCode = 'YAHOO/AAPL' # Desired data can be found via www.quandl.com, check for code name
 	#dataCode = 'UGID/POPCHG_TUR' 
 	startDate = "2001-01-01"
-	finishDate = "2100-01-01"
+	finishDate = "2002-06-10"
 	timeRange = "monthly"
 	dataType = 'pandas'
 
