@@ -5,8 +5,9 @@ def main():
 	dataCode = 'YAHOO/AAPL' # Desired data can be found via www.quandl.com, check for code name
 	#dataCode = 'UGID/POPCHG_TUR' 
 	startDate = "2001-01-01"
-	finishDate = "2002-06-10"
-	timeRange = "monthly"
+	finishDate = "2005-03-10"
+	#timeRange = "monthly"
+	timeRange = "weekly"
 	dataType = 'pandas'
 
 	dataSet = download_data.get(dataCode, startDate, finishDate, timeRange, dataType)

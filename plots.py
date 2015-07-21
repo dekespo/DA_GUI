@@ -11,9 +11,6 @@ from datetime import datetime
 
 def plots(dataSet, window):
 
-		years = mdates.YearLocator()
-		months = mdates.MonthLocator()
-		yearsFmt = mdates.DateFormatter('%Y-%m')
 
 		fig, ax = plt.subplots()
 
@@ -27,13 +24,17 @@ def plots(dataSet, window):
 		#ax.scatter(xValues, yValues)
 		ax.scatter(time, xValues)
 
-		ax.xaxis.set_major_locator(years)
-		ax.xaxis.set_major_formatter(yearsFmt)
-		ax.xaxis.set_minor_locator(months)
-		ax.format_xdata = mdates.DateFormatter('%Y-%m-%d')
+		# Automatically choose the best dates
+		xtick_locator = mdates.AutoDateLocator()
+		xtick_formatter = mdates.AutoDateFormatter(xtick_locator)
+		ax.xaxis.set_major_locator(xtick_locator)
+		ax.xaxis.set_major_formatter(xtick_formatter)
+		# Rotate the x ticks
 		plt.setp(plt.xticks()[1], rotation = 60)
+
+		# Add grids and the labels
 		ax.grid(True)
-		ax.set_xlabel(t); ax.set_ylabel(x); ax.set_title(t + " vs " + x)
+		ax.set_xlabel(t); ax.set_ylabel(x); ax.set_title(x + " vs " + t)
 
 		# Add the graphic
 		canvas = FigureCanvasTkAgg(fig, master = window)
