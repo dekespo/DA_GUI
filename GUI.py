@@ -1,16 +1,17 @@
 import Tkinter as tk
 import tkFont
 import plots
+import textbox
 
 class GUI:
 	
-	def __init__(self, dataSet):
+	def __init__(self, dataset):
 		# Start GUI
 		self.root = tk.Tk()
 		self.root.title("DA_GUI_py")
 
 		# Get dataset
-		self.dataSet = dataSet
+		self.dataset = dataset
 
 		# Initial given size
 		self.width = self.root.winfo_screenwidth() * 5 / 6
@@ -49,13 +50,15 @@ class GUI:
 
 
 	def addTextBox(self):
-		fontType = tkFont.Font(family = "Helvetica", size = 20)
-		t = tk.Text(self.panes[1], height = self.height, width = self.width / 3, font = fontType)
-		t.insert(tk.END, self.dataSet)
-		t.pack()
+		# Put into the right pane
+		pane = self.panes[1] 
+		size = [self.height, self.width]
+
+		textbox.textbox(self.dataset, pane, size)
+
 
 	def addPlot(self):
 		# Put into the right pane
 		pane = self.panes[2] 
 
-		plots.plots(self.dataSet, pane)
+		plots.plots(self.dataset, pane)

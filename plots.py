@@ -2,25 +2,23 @@ import Tkinter as tk
 import matplotlib
 #matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-#from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
-from datetime import datetime
 
 
-def plots(dataSet, window):
+def plots(dataset, window):
 
-
+		# Create a figure
 		fig, ax = plt.subplots()
 
-		time = dataSet.index.to_pydatetime()
+		# Arrange data to use in the figure
+		time = dataset.index.to_pydatetime()
 		t = "Time"
 		x = "Volume"
 		y = "Open"
-		print list(dataSet.columns.values)
-		xValues = dataSet[x]
-		#yValues = dataSet[y]
+		xValues = dataset[x]
+		#yValues = dataset[y]
 		#ax.scatter(xValues, yValues)
 		ax.scatter(time, xValues)
 

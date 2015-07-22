@@ -10,13 +10,13 @@ def main():
 	timeRange = "weekly"
 	dataType = 'pandas'
 
-	dataSet = download_data.get(dataCode, startDate, finishDate, timeRange, dataType)
-	#dataSet = download_data.get() # default
+	dataset = download_data.get(dataCode, startDate, finishDate, timeRange, dataType)
+	#dataset = download_data.get() # default
 
-	GUI.GUI(dataSet)
+	GUI.GUI(dataset)
 
-	#print dataSet
-	#print type(dataSet)
+	#print dataset
+	#print type(dataset)
 
 if __name__ == "__main__":
 	main()
