@@ -21,6 +21,12 @@ class GUI:
 		# Add Window Panes	
 		self.addPanes()
 
+		# Add Left Panes	
+		self.designLeftPane()
+
+		# Add buttons on Left Panes
+		self.addLeftButtons()
+
 		# Add Plot
 		self.addPlot()
 
@@ -32,25 +38,56 @@ class GUI:
 	
 
 	def addPanes(self):
-		self.window = tk.PanedWindow(self.root, showhandle = True, bd = 1)
+		window = tk.PanedWindow(self.root, showhandle = True, bd = 1)
 		# Gives flexible size arragenment in the window (not event listener is used)
-		self.window.pack(fill = tk.BOTH, expand = 1) 
+		window.pack(fill = tk.BOTH, expand = 1) 
 
 		div = self.width / 3
 		self.panes = [] # 0 = Left, 1 = Center, 2 Right
-		self.panes.append(tk.Label(self.window, text = "LEFT"))
-		self.panes.append(tk.Label(self.window, text = "CENTER"))
-		self.panes.append(tk.Label(self.window, text = "RIGHT"))
+		self.panes.append(tk.Label(window, text = "LEFT"))
+		self.panes.append(tk.Label(window, text = "CENTER"))
+		self.panes.append(tk.Label(window, text = "RIGHT"))
 
 		for pane in self.panes:
-			self.window.paneconfig(pane, minsize = div / 3, width = div)
-			self.window.add(pane)
+			window.paneconfig(pane, minsize = div / 2, width = div)
+			window.add(pane)
 
-		self.window.pack()
+		window.pack()
+
+	def designLeftPane(self):
+		# Divide the left into two subpanes
+		window = tk.PanedWindow(self.panes[0], showhandle = True,
+								bd = 1, orient = tk.VERTICAL)
+		# Gives flexible size arragenment in the window (not event listener is used)
+		window.pack(fill = tk.BOTH, expand = 1) 
+		self.subpanes = []
+		self.subpanes.append(tk.Label(window, text = "UP"))
+		self.subpanes.append(tk.Label(window, text = "DOWN"))
+		
+		div = self.height / 3
+		for pane in self.subpanes:
+			window.paneconfig(pane, minsize = div / 3, height = div)
+			window.add(pane)
+
+		window.pack()
+
+	def addLeftButtons(self):
+		# Add button to the left up pane
+		v = tk.StringVar()
+		v.set("deneme")
+		e = tk.Entry(self.subpanes[0], textvariable = v)
+		e.pack()
+
+		def callback():
+			print e.get()
+
+		b = tk.Button(self.subpanes[0], text = "JUST DO IT",  command = lambda: callback())
+		b.pack()
+
 
 
 	def addTextBox(self):
-		# Put into the right pane
+		# Put into the middle pane
 		pane = self.panes[1] 
 		size = [self.height, self.width]
 
