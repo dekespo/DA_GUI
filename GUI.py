@@ -2,16 +2,23 @@ import Tkinter as tk
 import tkFont
 import plots
 import textbox
+import download_data
 
 class GUI:
 	
-	def __init__(self, dataset):
+	#def __init__(self, dataset, downloadContent):
+	def __init__(self, downloadContent):
+
+		# Copy content
+		self.downloadContent = downloadContent
+
 		# Start GUI
 		self.root = tk.Tk()
 		self.root.title("DA_GUI_py")
 
 		# Get dataset
-		self.dataset = dataset
+		#self.dataset = dataset
+		self.dataset = download_data.get(downloadContent)
 
 		# Initial given size
 		self.width = self.root.winfo_screenwidth() * 5 / 6
@@ -72,17 +79,33 @@ class GUI:
 		window.pack()
 
 	def addLeftButtons(self):
-		# Add button to the left up pane
-		v = tk.StringVar()
-		v.set("deneme")
-		e = tk.Entry(self.subpanes[0], textvariable = v)
-		e.pack()
 
-		def callback():
-			print e.get()
+		stringvars = []
+		entries = []
+		i = 0
+		for key, item in self.downloadContent.items():
+			# Add a button to the left up pane
+			var = tk.StringVar()
+			var.set(item)
+			stringvars.append(var)
+			label = tk.StringVar()
+			label.set(key)
+			labelbox = tk.Label(self.subpanes[0], textvariable = label)
+			labelbox.grid(row = i, column = 0)
+			entry = tk.Entry(self.subpanes[0], textvariable = var)
+			entry.grid(row = i, column = 1)
+			entries.append(entry)
+			i += 1
 
-		b = tk.Button(self.subpanes[0], text = "JUST DO IT",  command = lambda: callback())
-		b.pack()
+		def download():
+			for i, key in enumerate(self.downloadContent.keys()):
+				self.downloadContent[key] = entries[i].get()
+				self.dataset = download_data.get(self.downloadContent)
+				self.addPlot()
+			print self.downloadContent
+
+		b = tk.Button(self.subpanes[0], text = "DOWNLOAD DATA", command = lambda: download())
+		b.grid(row = i, column = 0, columnspan = 2)
 
 
 

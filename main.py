@@ -15,10 +15,11 @@ def main():
 	#dataType = 'pandas'
 
 	#dataset = download_data.get() # default
-	dataset = download_data.get(downloadContent)
+	#dataset = download_data.get(downloadContent)
 	#dataset = download_data.get({})
 
-	GUI.GUI(dataset)
+	#GUI.GUI(dataset, downloadContent)
+	GUI.GUI(downloadContent)
 
 	#print dataset
 	#print type(dataset)
