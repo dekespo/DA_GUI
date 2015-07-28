@@ -18,7 +18,7 @@ The main purpose of this project is to see different data analyses by clicking n
 
 ## Status
 - Working at the moment, but still Tkinter issue
-- No buttons yet
+- Download data is partly avaiable
 - No data analysis yet
 - Choosing variables and plots will be added
 - Choosing data source will be added
