@@ -100,8 +100,10 @@ class GUI:
 		def download():
 			for i, key in enumerate(self.downloadContent.keys()):
 				self.downloadContent[key] = entries[i].get()
-				self.dataset = download_data.get(self.downloadContent)
-				self.addPlot()
+			self.dataset = download_data.get(self.downloadContent)
+			#print self.dataset
+			self.updatePlot()
+			#self.addPlot()
 			print self.downloadContent
 
 		b = tk.Button(self.subpanes[0], text = "DOWNLOAD DATA", command = lambda: download())
@@ -121,4 +123,10 @@ class GUI:
 		# Put into the right pane
 		pane = self.panes[2] 
 
-		plots.plots(self.dataset, pane)
+		self.figure = plots.create(self.dataset, pane)
+
+	def updatePlot(self):
+		# Put into the right pane
+		pane = self.panes[2] 
+
+		self.figure = plots.update(self.dataset, pane, self.figure)
